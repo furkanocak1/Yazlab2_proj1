@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Dispatcher",
     "\\Dispatcher.Tests",
     "\\Dispatcher.Tests\\Dispatcher.Tests"
   ],
-  "SelectedNode": "\\TicketService",
+  "SelectedNode": "\\Dispatcher.Tests\\Dispatcher.Tests\\AuthRoutingTest.cs",
   "PreviewInSolutionExplorer": false
 }
