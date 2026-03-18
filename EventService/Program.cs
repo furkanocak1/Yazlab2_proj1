@@ -1,25 +1,30 @@
+using EventService.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// 1. API Uç noktalarýný sisteme tanýtýyoruz
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+
+// 2. Swagger (Test Arayüzü) ayarlarý
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// 3. ÝLERÝSÝ ÝÇÝN HAZIRLIK: MongoDB ve Repository Ayarlarý
+// Not: IEventRepository ve EventRepository sýnýflarýný daha sonra oluþturacaðýz.
+// Þimdilik yorum satýrý yapýyorum ki hata vermesin. Sýnýflarý yazýnca baþýndaki "//" iþaretlerini kaldýracaðýz.
+// builder.Services.AddScoped<IEventRepository, EventRepository>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 4. Geliþtirme ortamýndaysak Swagger test ekranýný aç
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
