@@ -1,23 +1,41 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
-namespace Dispatcher
-{
-    public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+//  GÜVENLÝK-JWT Ayarlarý(AuthServicesde belirlediðimiz anahtar var)
+var key = Encoding.ASCII.GetBytes("YazlabBiletlemeSistemiCokGizliAnahtar12345!!");
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        public static void Main(string[] args)
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            var builder = WebApplication.CreateBuilder(args);
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true // Token süresi kontrolü
+        };
+    });
 
-            // Sadece temel kontrolcü desteðini ekle (Boþ iskelet)
-            builder.Services.AddControllers();
+builder.Services.AddAuthorization();
 
-            var app = builder.Build();
+//  YARP Yönlendirme Ayarlarý
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
-            app.UseRouting();
-            app.MapControllers();
+var app = builder.Build();
 
-            app.Run();
-        }
-    }
-}
+// Ýsteklerin geçiþ sýrasý
+app.UseRouting();
+
+//  kimlik kontrolü 
+app.UseAuthentication();
+app.UseAuthorization();
+
+//Servise yönlendiren kýsým
+app.MapReverseProxy();
+
+app.Run();
