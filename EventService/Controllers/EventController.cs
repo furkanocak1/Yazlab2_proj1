@@ -34,7 +34,7 @@ namespace EventService.Controllers
         {
             await _eventRepository.CreateEventAsync(newEvent);
 
-            // Baþarýyla kaydedildiðinde 201 Created döner
+            //kaydedildiðinde 201 Created döner
             return StatusCode(201, new { Message = "Etkinlik baþarýyla eklendi.", Event = newEvent });
         }
     }

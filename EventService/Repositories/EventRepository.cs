@@ -10,7 +10,7 @@ namespace EventService.Repositories
     {
         private readonly IMongoCollection<Event> _events;
 
-        // Arkadaşının yaptığı gibi IConfiguration ile appsettings.json'ı okuyoruz
+        //IConfiguration ile appsettings.json'ı okuyoruz
         public EventRepository(IConfiguration config)
         {
             var mongoClient = new MongoClient(config.GetSection("MongoDbSettings:ConnectionString").Value);

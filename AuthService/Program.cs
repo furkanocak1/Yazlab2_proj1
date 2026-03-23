@@ -10,7 +10,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-// Sisteme "IUserRepository"  gördüðünde "UserRepository" sýnýfýný çalýþtýrmasýný söylüyoruz.
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 // -------------------------------------------------------------------
 
