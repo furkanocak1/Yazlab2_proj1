@@ -7,7 +7,7 @@ namespace AuthService.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         public string StudentId { get; set; } // Öðrenci Numarasý
 
