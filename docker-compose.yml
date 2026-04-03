@@ -22,6 +22,48 @@
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+
+  authservice:
+    build:
+      context: ./AuthService
+      dockerfile: Dockerfile
+    container_name: auth_service
+
+  eventservice:
+    build:
+      context: ./EventService
+      dockerfile: Dockerfile
+    container_name: event_service
+    environment:
+      - MongoDbSettings__ConnectionString=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+
+  ticketservice:
+    build:
+      context: ./TicketService
+      dockerfile: Dockerfile
+    container_name: ticket_service
+    environment:
+      - MongoDbSettings__ConnectionString=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+
+  dispatcher:
+    build:
+      context: ./Dispatcher
+      dockerfile: Dockerfile
+    container_name: api_dispatcher
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+    depends_on:
+      - authservice
+      - eventservice
+      - ticketservice
 
 volumes:
   mongo_data:
