@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,4 +39,9 @@ app.UseAuthorization();
 //Servise yönlendiren kýsým
 app.MapReverseProxy();
 
+// Middleware'lerin arasýna ekle
+app.UseHttpMetrics(); // Gelen HTTP isteklerini saymaya baþlar
+
+// MapControllers'ýn hemen üstüne ekle
+app.MapMetrics(); // Prometheus'un verileri çekeceði /metrics adresini açar
 app.Run();
