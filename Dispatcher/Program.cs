@@ -5,7 +5,7 @@ using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//  GÜVENLÝK-JWT Ayarlarý(AuthServicesde belirlediðimiz anahtar var)
+// GÜVENLÝK-JWT Ayarlarý
 var key = Encoding.ASCII.GetBytes("YazlabBiletlemeSistemiCokGizliAnahtar12345!!");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -17,31 +17,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateLifetime = true // Token süresi kontrolü
+            ValidateLifetime = true
         };
     });
 
 builder.Services.AddAuthorization();
 
-//  YARP Yönlendirme Ayarlarý
+// YARP Yönlendirme Ayarlarý
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
-// Ýsteklerin geçiþ sýrasý
 app.UseRouting();
 
-//  kimlik kontrolü 
 app.UseAuthentication();
 app.UseAuthorization();
 
-//Servise yönlendiren kýsým
+// Loglama ve Trafik akýþý için metrikler (Hocanýn istediði Grafana verileri)
+app.UseHttpMetrics();
+
 app.MapReverseProxy();
+app.MapMetrics();
 
-// Middleware'lerin arasýna ekle
-app.UseHttpMetrics(); // Gelen HTTP isteklerini saymaya baþlar
-
-// MapControllers'ýn hemen üstüne ekle
-app.MapMetrics(); // Prometheus'un verileri çekeceði /metrics adresini açar
 app.Run();
