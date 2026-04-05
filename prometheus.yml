@@ -1,7 +1,7 @@
 global:
-  scrape_interval: 5s # Her 5 saniyede bir veri toplama
+  scrape_interval: 5s
 
 scrape_configs:
-  - job_name: 'dispatcher'
+  - job_name: 'yazlab_dispatcher'
     static_configs:
-      - targets: ['host.docker.internal:5191'] # Dispatcher portun
+      - targets: ['api_dispatcher:8080']
