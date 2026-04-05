@@ -29,6 +29,9 @@
       context: ./AuthService
       dockerfile: Dockerfile
     container_name: auth_service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
 
   eventservice:
     build:
@@ -37,6 +40,8 @@
     container_name: event_service
     environment:
       - MongoDbSettings__ConnectionString=mongodb://mongodb:27017
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
     depends_on:
       - mongodb
 
@@ -47,6 +52,8 @@
     container_name: ticket_service
     environment:
       - MongoDbSettings__ConnectionString=mongodb://mongodb:27017
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
     depends_on:
       - mongodb
 
@@ -59,6 +66,7 @@
       - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
     depends_on:
       - authservice
 

@@ -16,12 +16,11 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 
 // (Pipeline)
-if (app.Environment.IsDevelopment())
-{
-    // Geliþtirme aþamasýndayken Swagger arayüzünü aktif et
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseAuthorization();
 
