@@ -29,9 +29,14 @@
       context: ./AuthService
       dockerfile: Dockerfile
     container_name: auth_service
+    ports:
+      - "5045:8080" # <swagger portu
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
+      - MongoDbSettings__ConnectionString=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
 
   eventservice:
     build:
@@ -63,7 +68,7 @@
       dockerfile: Dockerfile
     container_name: api_dispatcher
     ports:
-      - "5000:8080"
+      - "5000:8080" # dispatcehr portu
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
