@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-dispatcher",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build", "${workspaceFolder}/Dispatcher/Dispatcher.csproj", "-v", "q"],
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "build-authservice",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build", "${workspaceFolder}/AuthService/AuthService.csproj", "-v", "q"],
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "build-eventservice",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build", "${workspaceFolder}/EventService/EventService.csproj", "-v", "q"],
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "build-ticketservice",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build", "${workspaceFolder}/TicketService/TicketService.csproj", "-v", "q"],
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    }
+  ]
+}

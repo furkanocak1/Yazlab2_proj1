@@ -10,7 +10,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+var useInMemoryUsers = builder.Configuration.GetValue<bool>("UseInMemoryUserStore");
+if (useInMemoryUsers)
+    builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+else
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
 // -------------------------------------------------------------------
 
 var app = builder.Build();

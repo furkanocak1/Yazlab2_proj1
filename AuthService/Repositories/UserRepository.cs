@@ -24,7 +24,7 @@ namespace AuthService.Repositories
         }
 
         // Email'e göre kullanýcýyý getirme komutu (Giriþ yaparken lazým olacak)
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User?> GetUserByEmailAsync(string email)
         {
             return await _users.Find(x => x.Email == email).FirstOrDefaultAsync();
         }

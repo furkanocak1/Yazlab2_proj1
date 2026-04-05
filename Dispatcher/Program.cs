@@ -5,7 +5,7 @@ using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// GÜVENLİK-JWT Ayarları
+// GVENLK-JWT Ayarlar
 var key = Encoding.ASCII.GetBytes("YazlabBiletlemeSistemiCokGizliAnahtar12345!!");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -21,9 +21,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Authenticated", p => p.RequireAuthenticatedUser());
+});
 
-// YARP Yönlendirme Ayarları
+// YARP Ynlendirme Ayarlar
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
@@ -34,7 +37,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Loglama ve Trafik akışı için metrikler (Hocanın istediği Grafana verileri)
+// Loglama ve Trafik ak iin metrikler (Hocann istedii Grafana verileri)
 app.UseHttpMetrics();
 
 app.MapReverseProxy();

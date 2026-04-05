@@ -1,0 +1,46 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Dispatcher (API Gateway)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-dispatcher",
+      "program": "${workspaceFolder}/Dispatcher/bin/Debug/net8.0/Dispatcher.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Dispatcher",
+      "env": { "ASPNETCORE_URLS": "http://127.0.0.1:5000" },
+      "stopAtEntry": false
+    },
+    {
+      "name": "AuthService",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-authservice",
+      "program": "${workspaceFolder}/AuthService/bin/Debug/net8.0/AuthService.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/AuthService",
+      "env": { "ASPNETCORE_URLS": "http://127.0.0.1:7001" }
+    },
+    {
+      "name": "EventService",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-eventservice",
+      "program": "${workspaceFolder}/EventService/bin/Debug/net8.0/EventService.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/EventService",
+      "env": { "ASPNETCORE_URLS": "http://127.0.0.1:7002" }
+    },
+    {
+      "name": "TicketService",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-ticketservice",
+      "program": "${workspaceFolder}/TicketService/bin/Debug/net8.0/TicketService.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/TicketService",
+      "env": { "ASPNETCORE_URLS": "http://127.0.0.1:7003" }
+    }
+  ]
+}
